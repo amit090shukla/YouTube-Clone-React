@@ -4,6 +4,7 @@ import YTSearch from 'youtube-api-search';
 import SearchBar from './components/searchBar';
 import VideoList from './components/videoList';
 import VideoDetail from './components/videoDetail';
+import _ from 'lodash';
 
 
 
@@ -16,7 +17,12 @@ class App  extends Component {
             videos: [],
             selectedVideo: null 
         }
-        YTSearch({key: API_KEY, term: 'surfboard'},(videos) => {
+        this.videoSearch('windows 10 concept UI');
+        
+    }
+
+    videoSearch(term){
+        YTSearch({key: API_KEY, term: term},(videos) => {
             this.setState({
                 videos: videos,
                 selectedVideo: videos[0]
@@ -24,9 +30,10 @@ class App  extends Component {
         });
     }
     render(){
+        const videoSearch = _.debounce((term) =>{this.videoSearch(term)}, 300);
         return(
             <div>
-                <SearchBar />
+                <SearchBar onSearchTermChange = {videoSearch}/>
                 <VideoDetail videos = {this.state.selectedVideo}/>
                 <VideoList 
                 onVideoSelect = {selectedVideo => this.setState({selectedVideo})}
