@@ -8,3 +8,4 @@ Follow the following steps to run this project
 > npm install
 > npm start
 ```
+![YouTube clone App](https://i.imgur.com/nsTAeJ9.png)
